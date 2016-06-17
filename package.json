@@ -1,7 +1,7 @@
 {
-  "name": "socket-chat-example",
+  "name": "qw-lobby",
   "version": "0.0.1",
-  "description": "my first socket.io app",
+  "description": "Experimental QW Lobby website",
   "dependencies": {
     "express": "^4.10.2",
     "linkifyjs": "^2.0.3",
