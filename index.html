@@ -13,18 +13,19 @@
 		</style>
 	</head>
 	<body>
-		<ul id="messages"><li><a href="http://www.quakeworld.nu">Quakeworld.nu</a></ul>
-		<form action="">
-			<input id="m" autocomplete="off"/>
-			<button id="send">Send</button>
-			<button id="find_match">Find match</button>			
-		</form>
+	<ul id="messages"></ul>
+	<form action="">
+		<input id="m" autocomplete="off"/>
+		<button id="send">Send</button>
+		<button id="find_match">Find match</button>			
+	</form>
 		
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="/scripts/linkifyjs/dist/linkify.min.js"></script>
 	<script src="/scripts/linkifyjs/dist/linkify-jquery.min.js"></script>
 	<script>
+	
 		var socket = io();
 		
 		$('#send').click(function() {
@@ -60,9 +61,7 @@
 		
 		socket.on('redirect', function(redirect) {
 			console.log('Redirecting...');
-			
-			// There are variants on this redirect,
-			// 
+
 			window.location.replace(redirect);
 		});
 		
