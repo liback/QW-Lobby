@@ -1,5 +1,9 @@
 # QW-Lobby
 
+Development done on:
+Lubuntu 14.04.4 (trusty)
+
+
 Install nodejs
 ```
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
