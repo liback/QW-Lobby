@@ -10,10 +10,13 @@
 		#messages { list-style-type: none; margin: 0; padding: 0; }
 		#messages li { padding: 5px 10px; }
 		#messages li:nth-child(odd) { background: #eee; }
+		.hide { display: none; }
+		.show { display: block; }
 		</style>
 	</head>
 	<body>
 	<ul id="messages"></ul>
+
 	<form action="">
 		<input id="m" autocomplete="off"/>
 		<button id="send">Send</button>
@@ -25,6 +28,26 @@
 	<script src="/scripts/linkifyjs/dist/linkify.min.js"></script>
 	<script src="/scripts/linkifyjs/dist/linkify-jquery.min.js"></script>
 	<script>
+	
+		function startTimer(duration, display, redirect) {
+			
+			var timer = duration, minutes, seconds;
+			var intervalId = setInterval(function() {
+				minutes = parseInt(timer / 60, 10);
+				seconds = parseInt(timer % 60, 10);
+				
+				minutes = minutes < 10 ? "0" + minutes : minutes;
+				seconds = seconds < 10 ? "0" + seconds : seconds;	
+			
+				display.text("Match starting: "+ minutes + ":" + seconds);
+			
+				if (--timer < 0) {
+					display.text("");
+					clearInterval(intervalId);
+					window.location.replace(redirect);
+				}
+			}, 1000);
+		}	
 	
 		var socket = io();
 		
@@ -62,9 +85,17 @@
 		socket.on('redirect', function(redirect) {
 			console.log('Redirecting...');
 
-			window.location.replace(redirect);
+			// Countdown function to give user a few seconds 
+			// before the match starts (read: ezQuake launches)
+			jQuery(function ($) {
+				var fiveSeconds = 5;
+				display = $('#time');
+				
+				startTimer(fiveSeconds, display, redirect);
+			});
 		});
 		
-	</script>		
+	</script>
+	<span id="time"></span>
 	</body>
 </html>
