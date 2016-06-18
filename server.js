@@ -1,11 +1,11 @@
-var express = require('express'); 
-var app = express();
-var server = require('http').Server();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var linkify = require('linkifyjs');
+var express 	= require('express'); 
+var app 	= express();
+var server 	= require('http').Server();
+var http 	= require('http').Server(app);
+var io 		= require('socket.io')(http);
+var linkify 	= require('linkifyjs');
 var linkifyHtml = require('linkifyjs/html');
-
+var config 	= require('config');
 
 
 app.use('/scripts', express.static(__dirname + '/node_modules/'));
@@ -117,10 +117,10 @@ setInterval(function() {
 
 /**
 *
-* Start server and listen on port 3000
+* Start server and listen
 *
 ***/
-http.listen(3000, function() {
-	console.log('listening on *:3000');
+http.listen(config.get('server.port'), function() {
+	console.log('listening on '+ config.get('server.port'));
 });
 
