@@ -31,4 +31,4 @@ Run server
 nodejs server.js
 ```
 
-Server should now be running on port 3000, i.e. navigate to http://localhost:3000
+Server should now be running on port 40000, i.e. navigate to http://localhost:40000
