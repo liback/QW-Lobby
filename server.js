@@ -24,7 +24,7 @@ io.on('connection', function(socket) {
 	* 
 	* Note: Currently not shown to other users
 	***/
-	console.log('a user connected');
+	console.log('a user connected (Socket ID: '+ socket.id +')');
 
 	/***
 	*
@@ -33,7 +33,7 @@ io.on('connection', function(socket) {
 	* Note: Currently not shown to other users
 	***/
 	socket.on('disconnect', function() {
-		console.log('a user disconnected');
+		console.log('a user disconnected (Socket ID: '+ socket.id +')');
 	});
 	
 	/***
@@ -101,6 +101,8 @@ setInterval(function() {
 	console.log('Queue size: '+ clients.length);
 	
 	if (clients.length > 1) {
+		// This code currently only sends one of the players to game
+		// just to test the concept.
 		var client = clients.pop();
 		console.log('Client selected for matchmaking: (Socket ID:'+ client.id +')');
 		
