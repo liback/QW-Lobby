@@ -28,7 +28,7 @@ npm install
 
 Run server
 ```
-nodejs server.js
+npm start
 ```
 
 Server should now be running on port 40000, i.e. navigate to http://localhost:40000
