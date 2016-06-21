@@ -5,12 +5,7 @@ var logger          = require('morgan');
 var cookieParser    = require('cookie-parser');
 var bodyParser      = require('body-parser');
 var config          = require('config');
-
-var routes          = require('./routes/index');
-var users           = require('./routes/users');
-
-
-var app = express();
+var app             = express();
 
 // Config setup
 app.config = config;
@@ -34,8 +29,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+// Routes
+var routes_index     = require('./routes/index');
+var routes_users     = require('./routes/users');
+var routes_auth      = require('./routes/auth');
+
+app.use('/',        routes_index);
+app.use('/users',   routes_users);
+app.use('/auth',    routes_auth);
 
 app.use('/scripts', express.static(__dirname + '/node_modules/'));
 
