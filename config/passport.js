@@ -4,10 +4,10 @@
 var LocalStrategy   = require('passport-local').Strategy;
 
 // setup db
-var mysql = require('mysql');
-var bcrypt = require('bcrypt-nodejs');
-var dbconfig = require('./database');
-var connection = mysql.createConnection(dbconfig.connection);
+var mysql       = require('mysql');
+var bcrypt      = require('bcrypt-nodejs');
+var dbconfig    = require('./database');
+var connection  = mysql.createConnection(dbconfig.connection);
 
 connection.query('USE '+ dbconfig.database);
 
@@ -31,8 +31,8 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        connection.query("SELECT * FROM uers WHERE id = ?", [id], function(err, row) {
-            done(err, row[0]);
+        connection.query("SELECT * FROM uers WHERE id = ? ", [id], function(err, rows) {
+            done(err, rows[0]);
         });
     });
     
@@ -43,7 +43,7 @@ module.exports = function(passport) {
     ***/
     
     passport.use(
-        'local-signup'
+        'local-signup',
         new LocalStrategy({
             usernameField : 'username',
             passwordField : 'password',
@@ -63,11 +63,11 @@ module.exports = function(passport) {
                         password: bcrypt.hashSync(password, null, null)
                     };
                     
-                    var insertQuery = "INSERT INTO users (username, password) values(?, ?)";
+                    var insertQuery = "INSERT INTO users ( username, password ) values(?,?)";
                     
-                    connection.query(insertQuery, [newUserMysql.username], [newUserMysql.password], function(err, rows) {
+                    connection.query(insertQuery, [newUserMysql.username, newUserMysql.password], function(err, rows) {
                         newUserMysql.id = rows.insertId;
-                        
+                        console.log('this gets executed');
                         return done(null, newUserMysql);
                     });
                 }
@@ -82,7 +82,7 @@ module.exports = function(passport) {
     ***/
     
     passport.use(
-        'local-login'
+        'local-login',
         new LocalStrategy({
             usernameField : 'username',
             passwordField : 'password',
