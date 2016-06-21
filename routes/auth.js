@@ -8,9 +8,14 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.post('/signup', passport.authenticate('local-signup', {
-    successRedirect:    '/profile',
-    failureRedirect:    '/signup',
+    successRedirect:    '/auth/success',
+    failureRedirect:    '/auth/signup',
     failureFlash:       true
 }));
+
+// Displays success message after signup
+router.get('/success', function(req, res, next) {
+  res.render('auth/success', { title: 'Successfully signed up' });
+});
 
 module.exports = router;
