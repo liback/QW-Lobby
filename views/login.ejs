@@ -1,12 +1,14 @@
 <% include ./partials/header %>
 
+
+<div>
 <!-- Show any error message -->
 <% if (message.length > 0) { %>
     <div class="alert alert-danger"><%= message %></div>
 <% } %>
 
 <!-- Login form -->
-<form action="/auth/signup" method="post">
+<form action="/auth/login" method="post">
 
     <div class="form-group">
         <label>Username</label>
@@ -17,9 +19,9 @@
         <input type="password" class="form-control" name="password"/>
     </div>
     
-    <button type="submit" class="btn">Signup</button>
-    <p>Already have an account? <a href="/auth/login">Login</a></p>
+    <button type="submit" class="btn">Login</button>
 </form>
+</div>
 
 <% include ./partials/footer %>
 
