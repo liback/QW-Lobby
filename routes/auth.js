@@ -26,6 +26,12 @@ function (req, res) {
     res.redirect('/');
 });
 
+// Logout request handling
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
 // Signup page
 router.get('/signup', function(req, res, next) {
   res.render('signup', { title: 'Sign up', message: req.flash('signupMessage') });
