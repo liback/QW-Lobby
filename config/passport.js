@@ -31,7 +31,8 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        connection.query("SELECT * FROM uers WHERE id = ? ", [id], function(err, rows) {
+        connection.query("SELECT * FROM users WHERE id = ? ", [id], function(err, rows) {
+
             done(err, rows[0]);
         });
     });
@@ -67,7 +68,7 @@ module.exports = function(passport) {
                     
                     connection.query(insertQuery, [newUserMysql.username, newUserMysql.password], function(err, rows) {
                         newUserMysql.id = rows.insertId;
-                        console.log('this gets executed');
+
                         return done(null, newUserMysql);
                     });
                 }
@@ -89,7 +90,7 @@ module.exports = function(passport) {
             passReqToCallback : true
         },
         function (req, username, password, done) {
-            // check if user already exist
+
             connection.query("SELECT * FROM users WHERE username = ?", [username], function (err, rows) {
                 if (err)
                     return done(err);
@@ -98,8 +99,8 @@ module.exports = function(passport) {
                 }
                 
                 if (!bcrypt.compareSync(password, rows[0].password))
-                    return done(null, fase, req.flash('loginMessage', 'Wrong password'));
-                
+                    return done(null, false, req.flash('loginMessage', 'Wrong password'));
+
                 // all is well
                 return done(null, rows[0]);
             });

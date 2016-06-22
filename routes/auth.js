@@ -13,7 +13,18 @@ router.post('/login', passport.authenticate('local-login', {
     successRedirect:    '/lobby/',
     failureRedirect:    '/auth/login/',
     failureFlash:       true
-}));
+}),
+function (req, res) {
+    console.log('Setting cookies...');
+    
+    if (req.body.remember) {
+        req.session.cookie.maxAge = 1000 * 60 * 3;
+    } else {
+        req.session.cookie.expires = false;
+    }
+    
+    res.redirect('/');
+});
 
 // Signup page
 router.get('/signup', function(req, res, next) {

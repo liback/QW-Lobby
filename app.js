@@ -32,9 +32,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(passport.initialize());
-//app.use(passport.session());
 app.use(session({ secret: 'plepp', saveUninitialized: true, resave: true }, { cookie: { maxAge: 60000 } }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 
 // Routes
