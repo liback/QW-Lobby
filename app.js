@@ -9,6 +9,7 @@ var flash           = require('connect-flash');
 var app             = express();
 var passport        = require('passport');
 var session         = require('express-session');
+var getSessionUser  = require('./middleware/getsessionuser');
 
 // Config setup
 app.config = config;
@@ -36,6 +37,10 @@ app.use(session({ secret: 'plepp', saveUninitialized: true, resave: true }, { co
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+// Middleware that stores either logged in
+// user info or an empty user for use in layout
+app.use(getSessionUser);
 
 // Routes
 var routes_index     = require('./routes/index');
@@ -81,17 +86,4 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
