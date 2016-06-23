@@ -16,7 +16,7 @@
 	<script src="/scripts/linkifyjs/dist/linkify.min.js"></script>
 	<script src="/scripts/linkifyjs/dist/linkify-jquery.min.js"></script>
 	<script>
-	
+
 		function startTimer(duration, display, redirect) {
 			
 			var timer = duration, minutes, seconds;
@@ -35,22 +35,31 @@
 					window.location.replace(redirect);
 				}
 			}, 1000);
+			
 		}	
 	
 		var socket = io();
-		
+
 		$('#send').click(function() {
 						
 			if ($('#m').val() != '' && $('#m').val() != null) {
-				socket.emit('chat message', $('#m').val());
+			    var username    = '<%= sessionUser.username %>';
+			    var content     = $('#m').val(); 
+			
+			    // "Injecting" the username like this with 
+			    // a template variable makes me feel a bit dirty...
+				socket.emit('chat message', { username: username, content: content });
 				$('#m').val('');
 				
 			}
+			
 			// Avoid refreshing the page
 			return false;
+			
 		});
 		
 		$('#find_match').click(function() {
+		
 			if ($('#find_match').text() == 'Find match') {
 				console.log('findmatch pressed');
 				socket.emit('queue');
@@ -61,22 +70,24 @@
 				socket.emit('chat message', '** Player left queue **');
 				$('#find_match').text('Find match');				
 			}
+			
 			return false;
 			
 		});		
 				
 		socket.on('chat message', function(msg) {
-			$('#messages').append($('<li>').text(msg));
+		
+			$('#messages').append($('<li>').text(msg.username +': '+ msg.content));
 			//$('#messages').linkify();
 			
 			// Keep window scrolled to the bottom
 			// to see latest chat
 			var $cont = $('#chat');
             $cont[0].scrollTop = $cont[0].scrollHeight;
+            
 		});
 		
 		socket.on('redirect', function(redirect) {
-			console.log('Redirecting...');
 
 			// Countdown function to give user a few seconds 
 			// before the match starts (read: ezQuake launches)
@@ -86,10 +97,10 @@
 				
 				startTimer(fiveSeconds, display, redirect);
 			});
+			
 		});
 		
 	</script>
-	
 
 <% include ./partials/footer %>
 

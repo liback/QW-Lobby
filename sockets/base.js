@@ -30,6 +30,8 @@ module.exports = function(io) {
 	    *
 	    ***/	
 	    socket.on('chat message', function(msg) {
+	        // Just relay the message, contains 
+	        // msg.username and msg.content
 		    io.emit('chat message', msg);
 	    });
 	
