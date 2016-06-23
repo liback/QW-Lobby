@@ -29,7 +29,7 @@ function (req, res) {
 // Logout request handling
 router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('/auth/login');
 });
 
 // Signup page
@@ -48,7 +48,5 @@ router.post('/signup', passport.authenticate('local-signup', {
 router.get('/success', function(req, res, next) {
   res.render('auth/success', { title: 'Successfully signed up' });
 });
-
-
 
 module.exports = router;
